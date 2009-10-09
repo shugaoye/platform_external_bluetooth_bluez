@@ -60,6 +60,10 @@ LOCAL_SRC_FILES:= \
 	../sbc/sbc_primitives.c \
 	../sbc/sbc_primitives_neon.c
 
+ifeq (x86,$(TARGET_ARCH))
+LOCAL_SRC_FILES += ../sbc/sbc_primitives_mmx.c
+endif
+
 # to improve SBC performance
 LOCAL_CFLAGS:= -funroll-loops
 
