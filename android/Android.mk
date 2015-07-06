@@ -159,6 +159,7 @@ LOCAL_MODULE := bluetooth.default
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_REQUIRED_MODULES := bluetoothd bluetoothd-snoop init.bluetooth.rc
+LOCAL_REQUIRED_MODULES += brcm_patchram_plus
 
 ifeq ($(ANDROID_GE_5_0_0), 1)
 LOCAL_MODULE_RELATIVE_PATH := hw
@@ -713,6 +714,23 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := hciattach
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/bluez/configure.ac
+
+include $(BUILD_EXECUTABLE)
+
+#
+# brcm_patchram_plus
+#
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+	bluez/tools/brcm_patchram_plus.c \
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE := brcm_patchram_plus
+
+LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS) -Wno-missing-declarations
+
+LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 
 include $(BUILD_EXECUTABLE)
 
