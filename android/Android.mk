@@ -156,7 +156,7 @@ LOCAL_MODULE := bluetooth.default
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_REQUIRED_MODULES := bluetoothd bluetoothd-snoop init.bluetooth.rc
-LOCAL_REQUIRED_MODULES += brcm_patchram_plus
+LOCAL_REQUIRED_MODULES += brcm_patchram_plus hciattach
 
 ifeq ($(ANDROID_GE_5_0_0), 1)
 LOCAL_MODULE_RELATIVE_PATH := hw
