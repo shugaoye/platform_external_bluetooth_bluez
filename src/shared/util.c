@@ -34,6 +34,7 @@
 #include <dirent.h>
 #include <limits.h>
 #include <string.h>
+#include <strings.h>
 
 #include "src/shared/util.h"
 
