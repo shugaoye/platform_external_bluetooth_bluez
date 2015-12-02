@@ -95,14 +95,12 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
 LOCAL_SHARED_LIBRARIES := \
 	libglib \
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_TAGS := optional
 
@@ -241,14 +239,12 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
 LOCAL_SHARED_LIBRARIES := \
 	libglib \
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -276,14 +272,12 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_C_INCLUDES += \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
 LOCAL_SHARED_LIBRARIES := \
 	libglib \
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -316,9 +310,6 @@ LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
 LOCAL_SHARED_LIBRARIES := \
 	libglib \
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -368,9 +359,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -487,9 +475,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
-
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
 LOCAL_MODULE := l2test
@@ -512,7 +497,6 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
-	$(LOCAL_PATH)/bluez/lib \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
@@ -559,12 +543,10 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 	$(LOCAL_PATH)/bluez/android/compat \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -591,9 +573,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
-
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
 LOCAL_MODULE := hcitool
@@ -619,9 +598,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
-
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
 LOCAL_MODULE := hciconfig
@@ -646,9 +622,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
-
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
 LOCAL_MODULE := l2ping
@@ -670,11 +643,9 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -706,9 +677,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := hciattach
@@ -799,25 +767,6 @@ include $(BUILD_EXECUTABLE)
 endif
 
 #
-# bluetooth-headers
-#
-
-include $(CLEAR_VARS)
-
-LOCAL_MODULE := bluetooth-headers
-LOCAL_NODULE_TAGS := optional
-LOCAL_MODULE_CLASS := STATIC_LIBRARIES
-
-include_path := $(local-intermediates-dir)/include
-include_files := $(wildcard $(LOCAL_PATH)/bluez/lib/*.h)
-$(shell mkdir -p $(include_path)/bluetooth)
-$(foreach file,$(include_files),$(shell cp -u $(file) $(include_path)/bluetooth))
-
-LOCAL_EXPORT_C_INCLUDE_DIRS := $(include_path)
-
-include $(BUILD_STATIC_LIBRARY)
-
-#
 # avtest
 #
 
@@ -832,9 +781,6 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
@@ -858,11 +804,9 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/bluez \
+	$(LOCAL_PATH)/bluez/android \
 
 LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
-
-LOCAL_STATIC_LIBRARIES := \
-	bluetooth-headers \
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
