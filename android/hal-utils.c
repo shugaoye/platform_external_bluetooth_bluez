@@ -314,8 +314,12 @@ static void local_le_feat2string(char *str, const bt_local_le_features_t *f)
 	str += sprintf(str, "Num of offloaded scan filters: %u,\n",
 						f->max_adv_filter_supported);
 
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+	scan_num = f->scan_result_storage_size;
+#else
 	scan_num = (f->scan_result_storage_size_hibyte << 8) +
 					f->scan_result_storage_size_lobyte;
+#endif
 
 	str += sprintf(str, "Num of offloaded scan results: %u,\n", scan_num);
 
