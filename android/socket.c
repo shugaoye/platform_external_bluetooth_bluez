@@ -653,6 +653,10 @@ static bool sock_send_accept(struct rfcomm_sock *rfsock, bdaddr_t *bdaddr,
 	bdaddr2android(bdaddr, cmd.bdaddr);
 	cmd.channel = rfsock->channel;
 	cmd.status = 0;
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+	cmd.max_tx_packet_size = 0;
+	cmd.max_rx_packet_size = 0;
+#endif
 
 	len = bt_sock_send_fd(rfsock->jv_sock, &cmd, sizeof(cmd), fd_accepted);
 	if (len != sizeof(cmd)) {
@@ -1037,6 +1041,10 @@ static bool sock_send_connect(struct rfcomm_sock *rfsock, bdaddr_t *bdaddr)
 	bdaddr2android(bdaddr, cmd.bdaddr);
 	cmd.channel = rfsock->channel;
 	cmd.status = 0;
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+	cmd.max_tx_packet_size = 0;
+	cmd.max_rx_packet_size = 0;
+#endif
 
 	len = write(rfsock->jv_sock, &cmd, sizeof(cmd));
 	if (len < 0) {

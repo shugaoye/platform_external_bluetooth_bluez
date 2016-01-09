@@ -21,11 +21,17 @@
  *
  */
 
+#include "hal.h"
+
 struct hal_sock_connect_signal {
 	short   size;
 	uint8_t bdaddr[6];
 	int     channel;
 	int     status;
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+	unsigned short max_tx_packet_size;
+	unsigned short max_rx_packet_size;
+#endif
 } __attribute__((packed));
 
 void bt_socket_register(struct ipc *ipc, const bdaddr_t *addr, uint8_t mode);
