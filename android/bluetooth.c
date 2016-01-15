@@ -60,9 +60,6 @@
 #define DEVICES_FILE ANDROID_STORAGEDIR"/devices"
 #define CACHE_FILE ANDROID_STORAGEDIR"/cache"
 
-#define ADAPTER_MAJOR_CLASS 0x02 /* Phone */
-#define ADAPTER_MINOR_CLASS 0x03 /* Smartphone */
-
 /* Default to DisplayYesNo */
 #define DEFAULT_IO_CAPABILITY 0x01
 
@@ -3275,6 +3272,42 @@ static void load_devices_info(bt_bluetooth_ready cb)
 static void set_adapter_class(void)
 {
 	struct mgmt_cp_set_dev_class cp;
+	char *contents;
+	int type;
+	uint8_t major_class = 0x01; // Computer
+	uint8_t minor_class = 0x00; // Uncategorized
+
+	if (g_file_get_contents("/sys/class/dmi/id/chassis_type",
+					&contents, NULL, NULL)) {
+
+		type = atoi(contents);
+
+		if (type > 0 || type < 0x1D) {
+			g_free(contents);
+
+			switch (type) {
+			case 0x3:
+			case 0x4:
+			case 0x6:
+			case 0x7:
+				minor_class = 0x01; // Desktop
+				break;
+			case 0x8:
+			case 0x9:
+			case 0xA:
+			case 0xE:
+				minor_class = 0x03; // Laptop
+				break;
+			case 0xB:
+				minor_class = 0x04; // Tablet
+				break;
+			case 0x11:
+			case 0x1C:
+				minor_class = 0x02; // Server
+				break;
+			}
+		}
+	}
 
 	memset(&cp, 0, sizeof(cp));
 
@@ -3282,8 +3315,8 @@ static void set_adapter_class(void)
 	 * kernel assign the major and minor numbers straight to dev_class[0]
 	 * and dev_class[1] without considering the proper bit shifting.
 	 */
-	cp.major = ADAPTER_MAJOR_CLASS & 0x1f;
-	cp.minor = ADAPTER_MINOR_CLASS << 2;
+	cp.major = major_class & 0x1f;
+	cp.minor = minor_class << 2;
 
 	if (mgmt_send(mgmt_if, MGMT_OP_SET_DEV_CLASS, adapter.index, sizeof(cp),
 						&cp, NULL, NULL, NULL) > 0)
