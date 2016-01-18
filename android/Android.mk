@@ -156,7 +156,7 @@ LOCAL_MODULE := bluetooth.default
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_REQUIRED_MODULES := bluetoothd bluetoothd-snoop init.bluetooth.rc
-LOCAL_REQUIRED_MODULES += brcm_patchram_plus
+LOCAL_REQUIRED_MODULES += brcm_patchram_plus btattach
 
 ifeq ($(ANDROID_GE_5_0_0), 1)
 LOCAL_MODULE_RELATIVE_PATH := hw
@@ -645,6 +645,32 @@ LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
 LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
 LOCAL_MODULE_TAGS := debug
 LOCAL_MODULE := avtest
+
+LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/bluez/configure.ac
+
+include $(BUILD_EXECUTABLE)
+
+#
+# btattach
+#
+
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+	bluez/tools/btattach.c \
+	bluez/src/shared/mainloop.c \
+	bluez/src/shared/io-mainloop.c \
+	bluez/src/shared/hci.c \
+	bluez/src/shared/queue.c \
+	bluez/src/shared/util.c \
+
+LOCAL_C_INCLUDES := \
+	$(LOCAL_PATH)/bluez
+
+LOCAL_CFLAGS := $(BLUEZ_COMMON_CFLAGS)
+
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE := btattach
 
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/bluez/configure.ac
 
