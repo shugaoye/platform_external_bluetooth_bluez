@@ -1048,6 +1048,33 @@ static int read_energy_info(void)
 	return hal_ipc_cmd(HAL_SERVICE_ID_BLUETOOTH, HAL_OP_READ_ENERGY_INFO, 0,
 							NULL, NULL, NULL, NULL);
 }
+
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+static void dump(int fd)
+{
+	DBG("dump: %d", fd);
+	/* TODO: implement */
+}
+
+static int config_clear(void)
+{
+	DBG("");
+	/* TODO: implement */
+	return BT_STATUS_SUCCESS;
+}
+
+static void interop_database_clear(void)
+{
+	DBG("");
+	/* TODO: implement */
+}
+
+static void interop_database_add(uint16_t feature, const bt_bdaddr_t *addr, size_t len)
+{
+	DBG("");
+	/* TODO: implement */
+}
+#endif
 #endif
 
 static const bt_interface_t bluetooth_if = {
@@ -1080,6 +1107,12 @@ static const bt_interface_t bluetooth_if = {
 	.get_connection_state = get_connection_state,
 	.set_os_callouts = set_os_callouts,
 	.read_energy_info = read_energy_info,
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 0)
+	.dump = dump,
+	.config_clear = config_clear,
+	.interop_database_clear = interop_database_clear,
+	.interop_database_add = interop_database_add,
+#endif
 #endif
 };
 
