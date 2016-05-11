@@ -5,6 +5,8 @@ BLUEZ_VERSION := `grep "^AC_INIT" $(LOCAL_PATH)/bluez/configure.ac | sed -e "s/.
 
 ANDROID_VERSION := $(shell echo $(PLATFORM_VERSION) | awk -F. '{ printf "0x%02d%02d%02d",$$1,$$2,$$3 }')
 
+CM_ANDROID_VERSION := $(shell echo $(CM_VERSION) | awk -F. '{ printf "0x%02d%02d00",$$1,$$2 }')
+
 ANDROID_GE_5_0_0 := $(shell test `echo $$(($(ANDROID_VERSION)))` -lt `echo $$((0x050000))`; echo $$?)
 
 # Specify pathmap for glib and sbc
@@ -14,6 +16,7 @@ pathmap_INCL += glib:external/bluetooth/glib \
 # Specify common compiler flags
 BLUEZ_COMMON_CFLAGS := -DVERSION=\"$(BLUEZ_VERSION)\" \
 			-DANDROID_VERSION=$(ANDROID_VERSION) \
+			-DCM_ANDROID_VERSION=$(CM_ANDROID_VERSION) \
 			-DANDROID_STORAGEDIR=\"/data/misc/bluetooth\" \
 			-DHAVE_LINUX_IF_ALG_H \
 			-DHAVE_LINUX_TYPES_H \
