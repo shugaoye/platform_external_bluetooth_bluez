@@ -73,8 +73,11 @@ static btav_callbacks_t av_cbacks = {
 static void init_p(int argc, const char **argv)
 {
 	RETURN_IF_NULL(if_av);
-
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+	EXEC(if_av->init, &av_cbacks, 1, 0); // max_connections=1, a2dp_multicast_state=false
+#else
 	EXEC(if_av->init, &av_cbacks);
+#endif
 }
 
 /* connect */
