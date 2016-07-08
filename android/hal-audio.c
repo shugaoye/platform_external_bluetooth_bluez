@@ -87,7 +87,7 @@ static uint64_t timespec_diff_us(struct timespec *a, struct timespec *b)
 	return res.tv_sec * 1000000ll + res.tv_nsec / 1000ll;
 }
 
-#if defined(ANDROID)
+#if ANDROID_VERSION < PLATFORM_VER(6, 0, 0)
 /*
  * Bionic does not have clock_nanosleep() prototype in time.h even though
  * it provides its implementation.
