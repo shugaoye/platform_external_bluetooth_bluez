@@ -585,7 +585,7 @@ fail:
 	return status;
 }
 
-static int enable(void)
+static int enable(bool restricted)
 {
 	DBG("");
 

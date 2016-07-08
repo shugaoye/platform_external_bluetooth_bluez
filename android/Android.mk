@@ -27,10 +27,12 @@ BLUEZ_COMMON_CFLAGS += -Wall -Wextra \
 			-Wmissing-declarations \
 			-Wredundant-decls \
 			-Wcast-align \
+			-Werror \
 
 # Disable warnings enabled by Android but not enabled in autotools build
 BLUEZ_COMMON_CFLAGS += -Wno-pointer-arith \
 			-Wno-missing-field-initializers \
+			-Wno-maybe-uninitialized \
 			-Wno-unused-parameter \
 
 #

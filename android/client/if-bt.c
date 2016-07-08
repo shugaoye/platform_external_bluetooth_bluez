@@ -250,7 +250,11 @@ static void pin_request_answer(char *reply)
 }
 
 static void pin_request_cb(bt_bdaddr_t *remote_bd_addr, bt_bdname_t *bd_name,
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 1)
+							uint32_t cod, bool u)
+#else
 								uint32_t cod)
+#endif
 {
 	/* Store for command completion */
 	bt_bdaddr_t2str(remote_bd_addr, last_remote_addr);
@@ -464,7 +468,11 @@ static void enable_p(int argc, const char **argv)
 {
 	RETURN_IF_NULL(if_bluetooth);
 
+#if ANDROID_VERSION >= PLATFORM_VER(6, 0, 1)
+	EXEC(if_bluetooth->enable, false);
+#else
 	EXEC(if_bluetooth->enable);
+#endif
 }
 #if ANDROID_VERSION >= PLATFORM_VER(5, 0, 0)
 static void read_energy_info_p(int argc, const char **argv)
