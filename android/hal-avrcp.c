@@ -306,7 +306,7 @@ static bt_status_t get_play_status_rsp(btrc_play_status_t status,
 }
 
 #if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
-static bt_status_t list_player_app_attr_rsp(int num_attr,
+static bt_status_t list_player_app_attr_rsp(uint8_t num_attr,
 						btrc_player_attr_t *p_attrs,
 						bt_bdaddr_t *bd_addr)
 #else
@@ -323,8 +323,13 @@ static bt_status_t list_player_app_attr_rsp(int num_attr,
 	if (!interface_ready())
 		return BT_STATUS_NOT_READY;
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+	if (num_attr < 1)
+		return BT_STATUS_PARM_INVALID;
+#else
 	if (num_attr < 0)
 		return BT_STATUS_PARM_INVALID;
+#endif
 
 	len = sizeof(*cmd) + num_attr;
 	if (len > IPC_MTU)
@@ -339,7 +344,7 @@ static bt_status_t list_player_app_attr_rsp(int num_attr,
 }
 
 #if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
-static bt_status_t list_player_app_value_rsp(int num_val, uint8_t *p_vals,
+static bt_status_t list_player_app_value_rsp(uint8_t num_val, uint8_t *p_vals,
 						bt_bdaddr_t *bd_addr)
 #else
 static bt_status_t list_player_app_value_rsp(int num_val, uint8_t *p_vals)
@@ -354,8 +359,13 @@ static bt_status_t list_player_app_value_rsp(int num_val, uint8_t *p_vals)
 	if (!interface_ready())
 		return BT_STATUS_NOT_READY;
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+	if (num_val < 1)
+		return BT_STATUS_PARM_INVALID;
+#else
 	if (num_val < 0)
 		return BT_STATUS_PARM_INVALID;
+#endif
 
 	len = sizeof(*cmd) + num_val;
 

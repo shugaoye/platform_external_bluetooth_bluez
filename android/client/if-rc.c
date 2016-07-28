@@ -78,23 +78,40 @@ static void remote_features_cb(bt_bdaddr_t *bd_addr,
 				bt_bdaddr_t2str(bd_addr, last_addr), features);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_play_status_cb(bt_bdaddr_t *bd_addr)
+#else
 static void get_play_status_cb(void)
+#endif
 {
 	haltest_info("%s\n", __func__);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void list_player_app_attr_cb(bt_bdaddr_t *bd_addr)
+#else
 static void list_player_app_attr_cb(void)
+#endif
 {
 	haltest_info("%s\n", __func__);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void list_player_app_values_cb(btrc_player_attr_t attr_id, bt_bdaddr_t *bd_addr)
+#else
 static void list_player_app_values_cb(btrc_player_attr_t attr_id)
+#endif
 {
 	haltest_info("%s, attr_id=%d\n", __func__, attr_id);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_player_app_value_cb(uint8_t num_attr, btrc_player_attr_t *p_attrs,
+										bt_bdaddr_t *bd_addr)
+#else
 static void get_player_app_value_cb(uint8_t num_attr,
 						btrc_player_attr_t *p_attrs)
+#endif
 {
 	int i;
 
@@ -104,8 +121,13 @@ static void get_player_app_value_cb(uint8_t num_attr,
 		haltest_info("attribute=%u\n", p_attrs[i]);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_player_app_attrs_text_cb(uint8_t num_attr,
+						btrc_player_attr_t *p_attrs, bt_bdaddr_t *bd_addr)
+#else
 static void get_player_app_attrs_text_cb(uint8_t num_attr,
 						btrc_player_attr_t *p_attrs)
+#endif
 {
 	int i;
 
@@ -116,14 +138,24 @@ static void get_player_app_attrs_text_cb(uint8_t num_attr,
 
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_player_app_values_text_cb(uint8_t attr_id,
+								uint8_t num_val, uint8_t *p_vals,
+								bt_bdaddr_t *bd_addr)
+#else
 static void get_player_app_values_text_cb(uint8_t attr_id, uint8_t num_val,
 								uint8_t *p_vals)
+#endif
 {
 	haltest_info("%s, attr_id=%d num_val=%d values=%p\n", __func__,
 						attr_id, num_val, p_vals);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void set_player_app_value_cb(btrc_player_settings_t *p_vals, bt_bdaddr_t *bd_addr)
+#else
 static void set_player_app_value_cb(btrc_player_settings_t *p_vals)
+#endif
 {
 	int i;
 
@@ -134,7 +166,12 @@ static void set_player_app_value_cb(btrc_player_settings_t *p_vals)
 							p_vals->attr_values[i]);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_element_attr_cb(uint8_t num_attr, btrc_media_attr_t *attrs,
+									bt_bdaddr_t *bd_addr)
+#else
 static void get_element_attr_cb(uint8_t num_attr, btrc_media_attr_t *attrs)
+#endif
 {
 	uint8_t i;
 
@@ -144,17 +181,30 @@ static void get_element_attr_cb(uint8_t num_attr, btrc_media_attr_t *attrs)
 		haltest_info("attr id=%s\n", btrc_media_attr_t2str(attrs[i]));
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void register_notification_cb(btrc_event_id_t event_id, uint32_t param,
+									bt_bdaddr_t *bd_addr)
+#else
 static void register_notification_cb(btrc_event_id_t event_id, uint32_t param)
+#endif
 {
 	haltest_info("%s, event=%u param=%u\n", __func__, event_id, param);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void volume_change_cb(uint8_t volume, uint8_t ctype, bt_bdaddr_t *bd_addr)
+#else
 static void volume_change_cb(uint8_t volume, uint8_t ctype)
+#endif
 {
 	haltest_info("%s, volume=%d ctype=%d\n", __func__, volume, ctype);
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void passthrough_cmd_cb(int id, int key_state, bt_bdaddr_t *bd_addr)
+#else
 static void passthrough_cmd_cb(int id, int key_state)
+#endif
 {
 	haltest_info("%s, id=%d key_state=%d\n", __func__, id, key_state);
 }
@@ -198,7 +248,11 @@ static void get_play_status_rsp_c(int argc, const char **argv,
 	}
 }
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+static void get_play_status_rsp_p(uint8_t argc, const char **argv)
+#else
 static void get_play_status_rsp_p(int argc, const char **argv)
+#endif
 {
 	btrc_play_status_t play_status;
 	uint32_t song_len, song_pos;
@@ -373,6 +427,11 @@ static void register_notification_rsp_p(int argc, const char **argv)
 		memcpy(&reg.song_pos, &song_pos, sizeof(uint32_t));
 		break;
 
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+	case BTRC_EVT_ADDRESSED_PLAYER_CHANGED:
+	case BTRC_EVT_AVAILABLE_PLAYERS_CHANGED:
+	case BTRC_EVT_NOW_PLAYING_CONTENT_CHANGED:
+#endif
 	case BTRC_EVT_APP_SETTINGS_CHANGED:
 		haltest_error("not supported");
 		return;
@@ -396,6 +455,9 @@ static void cleanup_p(int argc, const char **argv)
 
 static struct method methods[] = {
 	STD_METHOD(init),
+#if CM_ANDROID_VERSION >= PLATFORM_VER(13, 0, 0)
+	//TODO
+#else
 	STD_METHODCH(get_play_status_rsp,
 					"<play_status> <song_len> <song_pos>"),
 	STD_METHODCH(get_element_attr_rsp, "<num_attr> <attrs_id> <value>"),
@@ -408,6 +470,7 @@ static struct method methods[] = {
 			"BTRC_EVT_TRACK_REACHED_END <type>\n"
 			"BTRC_EVT_TRACK_REACHED_START <type>\n"
 			"BTRC_EVT_PLAY_POS_CHANGED <type> <song_pos>\n"),
+#endif
 	STD_METHOD(cleanup),
 	END_METHOD
 };
