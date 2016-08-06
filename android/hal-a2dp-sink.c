@@ -104,7 +104,7 @@ static bt_status_t disconnect(bt_bdaddr_t *bd_addr)
 static bt_status_t init(btav_callbacks_t *callbacks,
 				int max_a2dp_connections, int a2dp_multicast_state)
 #else
-static bt_status_t init(btrc_callbacks_t *callbacks)
+static bt_status_t init(btav_callbacks_t *callbacks)
 #endif
 {
 	struct hal_cmd_register_module cmd;

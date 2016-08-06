@@ -327,8 +327,8 @@ static bt_status_t list_player_app_attr_rsp(int num_attr,
 	if (num_attr < 1)
 		return BT_STATUS_PARM_INVALID;
 #else
-        if (num_attr < 0)
-                return BT_STATUS_PARM_INVALID;
+	if (num_attr < 0)
+		return BT_STATUS_PARM_INVALID;
 #endif
 
 	len = sizeof(*cmd) + num_attr;
@@ -363,8 +363,8 @@ static bt_status_t list_player_app_value_rsp(int num_val, uint8_t *p_vals)
 	if (num_val < 1)
 		return BT_STATUS_PARM_INVALID;
 #else
-        if (num_val < 0)
-                return BT_STATUS_PARM_INVALID;
+	if (num_val < 0)
+		return BT_STATUS_PARM_INVALID;
 #endif
 
 	len = sizeof(*cmd) + num_val;
