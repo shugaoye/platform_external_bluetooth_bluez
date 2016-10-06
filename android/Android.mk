@@ -35,6 +35,7 @@ BLUEZ_COMMON_CFLAGS += -Wno-pointer-arith \
 			-Wno-maybe-uninitialized \
 			-Wno-unused-parameter \
 
+ifeq ($(BOARD_HAVE_BLUETOOTH_BLUEZ),true)
 #
 # Android BlueZ daemon (bluetoothd)
 #
@@ -522,6 +523,8 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 
 include $(BUILD_PREBUILT)
+
+endif # BOARD_HAVE_BLUETOOTH_BLUEZ
 
 #
 # btmgmt
