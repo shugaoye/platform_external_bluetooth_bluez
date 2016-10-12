@@ -49,6 +49,10 @@
 #include "src/shared/tty.h"
 #include "src/shared/hci.h"
 
+#ifdef ANDROID
+#include "cutils/properties.h"
+#endif
+
 static int open_serial(const char *path, unsigned int speed)
 {
 	struct termios ti;
@@ -230,6 +234,20 @@ int main(int argc, char *argv[])
 	sigset_t mask;
 	int exit_status, count = 0, proto_id = HCI_UART_H4;
 	unsigned int speed = B115200;
+
+#ifdef ANDROID
+	char pval[PROPERTY_VALUE_MAX];
+	if (property_get("hal.bluetooth.uart", pval, NULL) > 0) {
+		bredr_path = strdup(pval);
+	}
+	if (property_get("hal.bluetooth.uart.proto", pval, NULL) > 0) {
+		proto = strdup(pval);
+	}
+	if (property_get("hal.bluetooth.uart.speed", pval, NULL) > 0) {
+		unsigned int s = tty_get_speed(atoi(pval));
+		if (s > 0) speed = s;
+	}
+#endif
 
 	for (;;) {
 		int opt;
